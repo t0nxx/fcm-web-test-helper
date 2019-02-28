@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-messaging.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA4uYIEBbLeoOcMyjHaxWqLTDqNPFAmzRo",
+    authDomain: "noti-app-d778e.firebaseapp.com",
+    databaseURL: "https://noti-app-d778e.firebaseio.com",
+    projectId: "noti-app-d778e",
+    storageBucket: "noti-app-d778e.appspot.com",
+    messagingSenderId: "33652243207"
+  };
+  firebase.initializeApp(config);
+  const messaging = firebase.messaging();
+  messaging.requestPermission()
+  .then(function(){
+      console.log('message req acc');
+      return messaging.getToken();
+  })
+  .then(function(token){
+      document.getElementById('tokview').innerHTML = token;
+  })
+  .catch(function(err){
+    document.getElementById('err').innerHTML = err;
+  });
+  messaging.onMessage(function(payload){
+    console.log('new message',payload)
+  })
+</script>
+</head>
+<body>
+    <p id="tokview"></p>
+    <p id="err"></p>
+</body>
+
+</html>
